@@ -126,20 +126,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Scroll Animations using Intersection Observer
-    const animatedElements = document.querySelectorAll('.animate-on-scroll');
-    if (animatedElements.length > 0) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                }
-            });
-        }, {
-            threshold: 0.1
+// Scroll Animations using Intersection Observer
+const animatedElements = document.querySelectorAll('.animate-on-scroll');
+if (animatedElements.length > 0) {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            // Add the class if the element is intersecting (visible)
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+            } 
+            // Remove the class if the element is NOT intersecting (not visible)
+            else {
+                entry.target.classList.remove('is-visible');
+            }
         });
-        animatedElements.forEach(el => observer.observe(el));
-    }
+    }, {
+        threshold: 0.1 // The element is considered "visible" if 10% of it is in the viewport
+    });
+    animatedElements.forEach(el => observer.observe(el));
+}
 
     // Portfolio Card "View Details" functionality
     const portfolioCards = document.querySelectorAll('#portfolio .card');
